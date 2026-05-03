@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "https://www.privateacademy.in/og-image.png",
+        url: "/og-image.png",
         width: 1200,
         height: 1200,
         alt: "Private Academy logo",
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
       "Download comprehensive engineering study notes, question papers, and video tutorials for Mumbai University students. Join 2500+ successful engineering students.",
     site: "@PVTAcademyEdu",
     creator: "@privateacademy",
-    images: ["https://www.privateacademy.in/og-image.png"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -122,11 +122,11 @@ const structuredData = [
     url: "https://www.privateacademy.in/",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.privateacademy.in/og-image.png",
+      url: "/og-image.png",
       width: 1200,
       height: 1200,
     },
-    image: "https://www.privateacademy.in/og-image.png",
+    image: "/og-image.png",
     email: "privateacademy.in@gmail.com",
     slogan: "Engineering Excellence Hub",
     foundingDate: "2023",
