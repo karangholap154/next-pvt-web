@@ -87,7 +87,7 @@ export default function ProjectsPage() {
 
             <div className="flex flex-col sm:flex-row justify-center gap-3 mt-8">
               <a href={`mailto:${CONTACTS.email}`} className="inline-block">
-                <Button variant="primary">Email us</Button>
+                <Button variant="default">Email us</Button>
               </a>
               <a href={CONTACTS.whatsapp1.url} target="_blank" rel="noreferrer" className="inline-block">
                 <Button variant="outline">WhatsApp {CONTACTS.whatsapp1.label}</Button>
@@ -153,7 +153,7 @@ export default function ProjectsPage() {
 
           <div className="flex flex-col sm:flex-row justify-center gap-3 mt-8">
             <a href={`mailto:${CONTACTS.email}`} className="inline-block">
-              <Button variant="primary">Email us</Button>
+              <Button variant="default">Email us</Button>
             </a>
             <a href={CONTACTS.whatsapp1.url} target="_blank" rel="noreferrer" className="inline-block">
               <Button variant="outline">WhatsApp {CONTACTS.whatsapp1.label}</Button>
@@ -181,7 +181,7 @@ export default function ProjectsPage() {
                 </div>
                 <div className="flex gap-2">
                   <a href={`mailto:${CONTACTS.email}`} className="inline-block">
-                    <Button variant="primary">Email</Button>
+                    <Button variant="default">Email</Button>
                   </a>
                 </div>
               </div>
@@ -275,7 +275,7 @@ export default function ProjectsPage() {
 
           <div className="flex flex-col sm:flex-row justify-center gap-3">
             <a href={`mailto:${CONTACTS.email}`} className="inline-block">
-              <Button variant="primary">Email {CONTACTS.email}</Button>
+              <Button variant="default">Email {CONTACTS.email}</Button>
             </a>
             <a href={CONTACTS.whatsapp1.url} target="_blank" rel="noreferrer" className="inline-block">
               <Button variant="outline">Chat on WhatsApp {CONTACTS.whatsapp1.label}</Button>

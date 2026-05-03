@@ -180,7 +180,7 @@ export default function TermsAndConditionPage() {
           transition={{ type: 'spring', stiffness: 100, damping: 15 }}
           viewport={{ once: true }}
         >
-          <Button variant="primary" href="/">
+          <Button variant="default" href="/">
             Back to Home
           </Button>
         </motion.div>

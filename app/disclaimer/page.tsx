@@ -120,7 +120,7 @@ export default function DisclaimerPage() {
           transition={{ type: 'spring', stiffness: 100, damping: 15 }}
           viewport={{ once: true }}
         >
-          <Button variant="primary" href="/">Back to Home</Button>
+          <Button variant="default" href="/">Back to Home</Button>
         </motion.div>
       </div>
     </main>

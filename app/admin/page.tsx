@@ -198,7 +198,7 @@ export default function AdminPage() {
           </div>
           <div className="flex items-center gap-3">
             <Button
-              variant="primary"
+              variant="default"
               onClick={() => {
                 resetForm();
                 setEditingId(null);
