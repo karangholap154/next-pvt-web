@@ -16,35 +16,77 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.privateacademy.in"),
   title: {
-    default: "Private Academy Engineering",
-    template: "%s | Private Academy Engineering",
+    default:
+      "Private Academy - Mumbai University Engineering Study Notes & Question Papers | Download Materials",
+    template: "%s | Private Academy",
   },
   description:
-    "Private Academy Engineering is an educational platform for Mumbai University engineering students with notes, projects, tutorials, and career resources.",
+    "Download comprehensive engineering study notes, question papers, and video tutorials for Mumbai University students. Access materials for Computer, IT, AIML, Mechanical & Chemical engineering - all semesters, FE to BE. Join 2500+ successful students. Instant downloads. Expert curated content for exam preparation.",
   keywords: [
-    "Private Academy Engineering",
     "Mumbai University engineering notes",
-    "engineering study materials",
+    "study materials download",
+    "question papers PDF",
     "computer engineering notes",
-    "information technology notes",
-    "mini projects for engineering students",
+    "information technology study material",
+    "AIML notes",
+    "mechanical engineering papers",
+    "chemical engineering study guide",
+    "semester wise notes",
+    "engineering exam preparation",
+    "Mumbai University syllabus",
+    "study notes PDF download",
+    "previous year papers",
+    "engineering video tutorials",
+    "BE notes",
+    "B.Tech study material",
+    "Mumbai University examination",
+    "engineering entrance preparation",
+    "college study resources",
+    "engineering notes",
+    "online study materials",
+    "exam preparation guide",
+    "Private Academy",
   ],
+  authors: [
+    {
+      name: "Karan Gholap",
+      url: "https://www.privateacademy.in/",
+    },
+  ],
+  applicationName: "Private Academy",
+  creator: "Karan Gholap",
+  publisher: "Private Academy",
+  category: "education",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Private Academy Engineering",
+    title:
+      "Private Academy - Mumbai University Engineering Study Notes & Question Papers",
     description:
-      "Study notes, projects, tutorials, and educational resources for Mumbai University engineering students.",
-    url: "https://www.privateacademy.in",
-    siteName: "Private Academy Engineering",
+      "Download comprehensive engineering study notes, question papers, and video tutorials for Mumbai University students. Access materials for Computer, IT, AIML, Mechanical & Chemical engineering. Expert curated content. Join 2500+ successful students!",
+    url: "https://www.privateacademy.in/",
+    siteName: "Private Academy",
     type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "https://www.privateacademy.in/og-image.png",
+        width: 1200,
+        height: 1200,
+        alt: "Private Academy logo",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
-    title: "Private Academy Engineering",
+    card: "summary_large_image",
+    title:
+      "Private Academy - Mumbai University Engineering Study Notes & Question Papers",
     description:
-      "Study notes, projects, tutorials, and educational resources for Mumbai University engineering students.",
+      "Download comprehensive engineering study notes, question papers, and video tutorials for Mumbai University students. Join 2500+ successful engineering students.",
+    site: "@PVTAcademyEdu",
+    creator: "@privateacademy",
+    images: ["https://www.privateacademy.in/og-image.png"],
   },
   robots: {
     index: true,
@@ -58,7 +100,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/pvtimg.png",
+    shortcut: "/pvtimg.png",
+    apple: "/pvtimg.png",
   },
 };
 
@@ -66,14 +110,179 @@ export const viewport: Viewport = {
   themeColor: "#0f172a",
 };
 
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: "Private Academy",
+    alternateName: [
+      "Private Academy Mumbai University",
+      "Private Academy - Engineering Study Materials",
+    ],
+    url: "https://www.privateacademy.in/",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.privateacademy.in/og-image.png",
+      width: 1200,
+      height: 1200,
+    },
+    image: "https://www.privateacademy.in/og-image.png",
+    email: "privateacademy.in@gmail.com",
+    slogan: "Engineering Excellence Hub",
+    foundingDate: "2023",
+    founder: {
+      "@type": "Person",
+      name: "Karan Gholap",
+      jobTitle: "Founder & Developer",
+      sameAs: [
+        "https://linkedin.com/in/karangholap",
+        "https://x.com/TheKaranGholap",
+        "https://peerlist.io/karangholap",
+      ],
+    },
+    description:
+      "Download comprehensive engineering study notes, question papers, and video tutorials for Mumbai University students.",
+    sameAs: [
+      "https://www.instagram.com/privateacademy.in",
+      "https://t.me/mumcomputer",
+      "https://www.youtube.com/@pvtacademy",
+      "https://chat.whatsapp.com/EYeOgxDw8qp6oRMlnTjlfI",
+      "https://www.linkedin.com/company/privateacademy/",
+      "https://x.com/PVTAcademyEdu",
+    ],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "2500",
+    },
+    numberOfEmployees: {
+      "@type": "QuantitativeValue",
+      minValue: 2,
+      maxValue: 10,
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Mumbai",
+      addressRegion: "Maharashtra",
+      addressCountry: "IN",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 19.076,
+      longitude: 72.8777,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Private Academy",
+    alternateName: "Private Academy - Engineering Study Materials",
+    url: "https://www.privateacademy.in/",
+    description:
+      "Engineering study notes, question papers, and video tutorials for Mumbai University students.",
+    inLanguage: "en-IN",
+    publisher: {
+      "@type": "EducationalOrganization",
+      name: "Private Academy",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Courses Offered",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: {
+          "@type": "Course",
+          name: "Computer Engineering Notes",
+          description:
+            "Comprehensive study materials, notes, and question papers for Computer Engineering students.",
+          provider: {
+            "@type": "EducationalOrganization",
+            name: "Private Academy",
+          },
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: {
+          "@type": "Course",
+          name: "Information Technology Notes",
+          description:
+            "Complete study resources and materials for IT students.",
+          provider: {
+            "@type": "EducationalOrganization",
+            name: "Private Academy",
+          },
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        item: {
+          "@type": "Course",
+          name: "AIML Engineering Notes",
+          description:
+            "Specialized study materials for AI and Machine Learning engineering students.",
+          provider: {
+            "@type": "EducationalOrganization",
+            name: "Private Academy",
+          },
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        item: {
+          "@type": "Course",
+          name: "Mechanical Engineering Notes",
+          description:
+            "Study materials and resources for Mechanical Engineering students.",
+          provider: {
+            "@type": "EducationalOrganization",
+            name: "Private Academy",
+          },
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 5,
+        item: {
+          "@type": "Course",
+          name: "Chemical Engineering Notes",
+          description:
+            "Comprehensive study materials for Chemical Engineering students.",
+          provider: {
+            "@type": "EducationalOrganization",
+            name: "Private Academy",
+          },
+        },
+      },
+    ],
+  },
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("dark", inter.variable, "font-sans", geist.variable)} suppressHydrationWarning>
-          <body className="min-h-screen bg-zinc-950 text-zinc-50 antialiased font-inter transition-colors">
+    <html
+      lang="en"
+      className={cn("dark", inter.variable, "font-sans", geist.variable)}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen bg-zinc-950 text-zinc-50 antialiased font-inter transition-colors">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
+        />
         <div className="flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">
