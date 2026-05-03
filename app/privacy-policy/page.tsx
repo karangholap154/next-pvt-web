@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
     {
       title: '4. Cookies and Local Storage',
       content:
-        'The site does not rely on advertising cookies or third-party analytics tools in the current build. We do use browser local storage to remember your theme preference so the site can keep your selected appearance on future visits. You can clear or block local storage through your browser settings at any time.',
+        'We use browser local storage to remember your theme preference. The site also uses third-party advertising provided by Google AdSense which may set cookies and use identifiers for advertising personalization and measurement. Google’s use of advertising cookies is subject to its privacy policy: https://policies.google.com/technologies/ads. You can opt out of personalized ads at https://adssettings.google.com and learn about third-party privacy choices at https://www.aboutads.info/choices. You can also clear or block local storage through your browser settings at any time.',
     },
     {
       title: '5. Information Sharing',

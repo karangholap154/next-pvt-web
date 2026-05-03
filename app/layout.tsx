@@ -293,6 +293,12 @@ export default function RootLayout({
     })(window, document, "clarity", "script", "wl6nq5d9bb");`,
           }}
         />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5352167059639603" crossOrigin="anonymous"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(adsbygoogle = window.adsbygoogle || []).push({google_ad_client: "ca-pub-5352167059639603", enable_page_level_ads: true});`,
+          }}
+        />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-5QNL96TFYJ"></script>
         <script
           dangerouslySetInnerHTML={{
