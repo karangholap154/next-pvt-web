@@ -179,16 +179,23 @@ export default function Footer() {
                   <Heart className="w-4 h-4 text-red-500 fill-red-500" />
                 </motion.div>
                 <span>by</span>
-                <motion.span
-                  key={author}
-                  initial={{ opacity: 0, y: -2 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 2 }}
-                  transition={{ duration: 0.3 }}
-                  className="font-semibold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+                <a
+                  href="https://www.karangholap.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex"
                 >
-                  {author}
-                </motion.span>
+                  <motion.span
+                    key={author}
+                    initial={{ opacity: 0, y: -2 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 2 }}
+                    transition={{ duration: 0.3 }}
+                    className="font-semibold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent hover:opacity-90"
+                  >
+                    {author}
+                  </motion.span>
+                </a>
               </div>
 
               <div className="text-xs text-zinc-500">
