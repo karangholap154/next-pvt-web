@@ -9,6 +9,7 @@ import { ArrowLeft, BookOpen, Calendar, Download, Play, Sparkles } from 'lucide-
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Badge from '@/components/Badge';
+import ShareButton from '@/components/ShareButton';
 
 type Note = {
   id: string;
@@ -276,6 +277,11 @@ export default function NotePage() {
                       Download notes
                     </a>
                   </Button>
+
+                  <ShareButton
+                    title={`${note.title} — ${note.branch} Sem ${note.semester}`}
+                    text={buildNoteDescription(note)}
+                  />
 
                   <div className="grid gap-3">
                     <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
