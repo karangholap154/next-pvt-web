@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ].map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
-    changeFrequency: (path === '' ? 'weekly' : 'monthly') as const,
+    changeFrequency: (path === '' ? 'weekly' : 'monthly') as 'weekly' | 'monthly',
     priority: path === '' ? 1 : 0.7,
   }));
 
