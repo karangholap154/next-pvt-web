@@ -204,16 +204,16 @@ export default function AdminPage() {
                 setEditingId(null);
                 setDialogOpen(true);
               }}
-              icon={<Plus className="w-4 h-4" />}
             >
+              <Plus className="w-4 h-4" />
               Add Note
             </Button>
 
             <Button
               variant="outline"
               onClick={handleLogout}
-              icon={<LogOut className="w-4 h-4" />}
             >
+              <LogOut className="w-4 h-4" />
               Logout
             </Button>
           </div>

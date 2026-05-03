@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
@@ -149,7 +150,9 @@ export default function PrivacyPolicyPage() {
           transition={{ type: 'spring', stiffness: 100, damping: 15 }}
           viewport={{ once: true }}
         >
-          <Button variant="default" href="/">Back to Home</Button>
+          <Button asChild variant="default">
+            <Link href="/">Back to Home</Link>
+          </Button>
         </motion.div>
       </div>
     </main>
