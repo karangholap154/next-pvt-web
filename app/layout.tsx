@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Geist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -57,10 +57,13 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  themeColor: "#0f172a",
   icons: {
     icon: "/favicon.ico",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0f172a",
 };
 
 export default function RootLayout({
