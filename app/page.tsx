@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, BookOpen, Download, Filter, Play, Search, Sparkles, X } from 'lucide-react';
+import { ArrowRight, BookOpen, Download, Filter, Play, Search, Share2, Sparkles, X } from 'lucide-react';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Badge from '@/components/Badge';
+import ShareButton from '@/components/ShareButton';
 import {
   Select,
   SelectContent,
@@ -311,6 +312,39 @@ export default function Home() {
             </Button>
           </div>
         </motion.section>
+
+        {/* Share Section - Show when branch and semester are selected */}
+        {branch !== 'All' && semester !== 'All' && (
+          <motion.section
+            className="mt-8 rounded-3xl border border-cyan-400/30 bg-linear-to-br from-cyan-500/10 via-white/5 to-cyan-500/5 p-5 sm:p-6 backdrop-blur-xl"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, type: 'spring', stiffness: 100, damping: 18 }}
+          >
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 text-xs font-medium text-cyan-100">
+                  <Share2 className="h-3.5 w-3.5" />
+                  Share collection
+                </div>
+                <h2 className="mt-3 text-xl font-semibold text-white">
+                  Share {branch} Semester {semester} notes
+                </h2>
+                <p className="mt-1 text-sm text-zinc-400">
+                  Send this collection to your classmates or save it for later.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <ShareButton
+                url={`${typeof window !== 'undefined' ? window.location.origin : ''}/share/notes/${branch.toLowerCase()}/semester/${semester}`}
+                title={`${branch} Semester ${semester} Notes - Private Academy`}
+                text={`Check out these ${branch} Semester ${semester} study notes on Private Academy`}
+              />
+            </div>
+          </motion.section>
+        )}
 
         <section id="notes-grid" className="mt-10 scroll-mt-28">
           <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
