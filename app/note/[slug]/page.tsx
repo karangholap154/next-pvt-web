@@ -27,7 +27,7 @@ function buildNoteDescription(note: Note) {
 
 export default function NotePage() {
   const params = useParams();
-  const slug = params.id as string;
+  const slug = params.slug as string;
 
   const [note, setNote] = useState<Note | null>(null);
   const [isLoading, setIsLoading] = useState(true);
