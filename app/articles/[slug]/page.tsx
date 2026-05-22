@@ -12,6 +12,7 @@ import {
   FileText,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { getProxiedImageUrl, getAbsoluteProxiedImageUrl } from '@/lib/utils';
 import type { Article } from '@/lib/types';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
@@ -126,7 +127,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       description: buildSummary(article),
       type: 'article',
       url: `https://www.privateacademy.in/articles/${article.slug}`,
-      images: article.feature_image ? [{ url: article.feature_image }] : undefined,
+      images: article.feature_image ? [{ url: getAbsoluteProxiedImageUrl(article.feature_image) }] : undefined,
     },
   };
 }
@@ -232,7 +233,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <div className="relative aspect-4/3 bg-zinc-900">
                   {article.feature_image ? (
                     <Image
-                      src={article.feature_image}
+                      src={getProxiedImageUrl(article.feature_image)}
                       alt={article.title}
                       fill
                       unoptimized
