@@ -67,6 +67,48 @@ function buildSummary(article: Article) {
   return plainText.length > 280 ? `${plainText.slice(0, 280)}...` : plainText;
 }
 
+function buildKeywords(article: Article) {
+  const baseKeywords = [
+    'Private Academy articles',
+    'engineering study updates',
+    'Mumbai University',
+    'engineering blog',
+  ];
+
+  const tagKeywords = (article.tags || []).map((tag) => tag.trim()).filter(Boolean);
+
+  return Array.from(new Set([...baseKeywords, article.title, ...tagKeywords]));
+}
+
+function buildArticleSchema(article: Article) {
+  const publishedAt = article.published_at || article.created_at || article.updated_at;
+  const modifiedAt = article.updated_at || article.published_at || article.created_at;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: buildSummary(article),
+    url: `https://www.privateacademy.in/articles/${article.slug}`,
+    mainEntityOfPage: `https://www.privateacademy.in/articles/${article.slug}`,
+    image: article.feature_image ? [getAbsoluteProxiedImageUrl(article.feature_image)] : undefined,
+    datePublished: publishedAt || undefined,
+    dateModified: modifiedAt || undefined,
+    author: {
+      '@type': 'Organization',
+      name: 'Private Academy',
+      url: 'https://www.privateacademy.in/',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Private Academy',
+      url: 'https://www.privateacademy.in/',
+    },
+    keywords: buildKeywords(article).join(', '),
+    articleSection: (article.tags || []).length > 0 ? article.tags[0] : 'Articles',
+  };
+}
+
 function getPublishedLabel(article: Article) {
   const publishedAt = article.published_at || article.created_at || article.updated_at;
   if (!publishedAt) return 'Recently updated';
@@ -119,6 +161,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   return {
     title: article.title,
     description: buildSummary(article),
+    keywords: buildKeywords(article),
     alternates: {
       canonical: `/articles/${article.slug}`,
     },
@@ -127,7 +170,17 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       description: buildSummary(article),
       type: 'article',
       url: `https://www.privateacademy.in/articles/${article.slug}`,
+      siteName: 'Private Academy',
+      locale: 'en_US',
+      publishedTime: article.published_at || article.created_at || article.updated_at,
+      modifiedTime: article.updated_at || article.published_at || article.created_at,
       images: article.feature_image ? [{ url: getAbsoluteProxiedImageUrl(article.feature_image) }] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: buildSummary(article),
+      images: article.feature_image ? [getAbsoluteProxiedImageUrl(article.feature_image)] : undefined,
     },
   };
 }
@@ -169,6 +222,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-zinc-950 pt-24 pb-16 text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildArticleSchema(article)) }}
+      />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-cyan-500/18 blur-3xl" />
         <div className="absolute right-0 top-24 h-112 w-md rounded-full bg-fuchsia-500/14 blur-3xl" />
