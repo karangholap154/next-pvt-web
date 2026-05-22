@@ -11,6 +11,7 @@ import {
   Tag,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { getProxiedImageUrl } from '@/lib/utils';
 import type { Article } from '@/lib/types';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
@@ -198,7 +199,7 @@ export default async function ArticlesPage() {
                         <div className="relative w-full lg:w-1/3 aspect-video flex-shrink-0 overflow-hidden">
                           {article.feature_image ? (
                             <Image
-                              src={article.feature_image}
+                              src={getProxiedImageUrl(article.feature_image)}
                               alt={article.title}
                               fill
                               unoptimized

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { getProxiedImageUrl } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ImageIcon, Trash2, Edit2, LogOut, Plus } from 'lucide-react';
@@ -106,8 +107,10 @@ export default function AdminPage() {
 
     if (uploadError) throw uploadError;
 
-    const { data } = supabase.storage.from(articleImageBucket).getPublicUrl(filePath);
-    return data.publicUrl;
+    // Return only the file path instead of full Supabase URL
+    // This prevents exposing Supabase infrastructure
+    // Images will be served via /api/image proxy route from your domain instead
+    return filePath;
   };
 
   const fetchNotes = async () => {
@@ -588,7 +591,7 @@ export default function AdminPage() {
                           Preview
                         </div>
                         <img
-                          src={featureImagePreview || featureImage}
+                          src={featureImagePreview ? featureImagePreview : getProxiedImageUrl(featureImage)}
                           alt="Article feature preview"
                           className="h-48 w-full object-cover"
                         />
