@@ -10,16 +10,7 @@ import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Badge from '@/components/Badge';
 import ShareButton from '@/components/ShareButton';
-
-type Note = {
-  id: string;
-  title: string;
-  branch: string;
-  semester: number;
-  download_url: string;
-  slug: string;
-  youtube_url?: string;
-};
+import type { DBStudyNote as Note } from '@/lib/types';
 
 function buildNoteDescription(note: Note) {
   return `Download Mumbai University engineering study materials for ${note.title} (${note.branch}, semester ${note.semester}). This page links to the PDF or file hosted by Private Academy so you can prepare for exams with branch-specific notes and papers.`;
