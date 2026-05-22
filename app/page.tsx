@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
+import Hero from '@/components/Hero';
+import ArticlesPreview from '@/components/ArticlesPreview';
 import { ArrowRight, BookOpen, Download, Filter, Play, Search, Share2, Sparkles, X } from 'lucide-react';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
@@ -114,125 +116,8 @@ export default function Home() {
       </div>
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <motion.section
-          className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-12 backdrop-blur-xl"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'spring', stiffness: 90, damping: 18 }}
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.16),transparent_30%),radial-gradient(circle_at_top_right,rgba(236,72,153,0.14),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.05),transparent_40%)]" />
-
-          <div className="relative grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
-            <div className="space-y-8">
-              <div className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-400/25 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-100 shadow-[0_0_40px_rgba(34,211,238,0.10)]">
-                <Sparkles className="h-4 w-4" />
-                Mumbai University study hub
-              </div>
-
-              <div className="space-y-5">
-                <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight">
-                  Notes that feel easier to browse, faster to open, and better to study from
-                </h1>
-                <p className="max-w-2xl text-base leading-7 text-zinc-300 sm:text-lg">
-                  Search branch-wise notes, switch by semester, and jump straight into a clean note page with downloads and tutorials.
-                  Everything is organized to help students find what they need without friction.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3 items-center">
-                <Button asChild variant="secondary">
-                  <Link href="/projects">See Projects</Link>
-                </Button>
-                <Button asChild variant="outline">
-                  <Link href="mailto:privateacademy.in@gmail.com">Request Content</Link>
-                </Button>
-                <Button
-                  type="button"
-                  variant="default"
-                  onClick={scrollToNotes}
-                  className="h-11 rounded-full bg-linear-to-r from-cyan-500 via-blue-500 to-fuchsia-500 px-5 text-white shadow-[0_0_30px_rgba(34,211,238,0.24)] transition hover:brightness-110 hover:shadow-[0_0_42px_rgba(168,85,247,0.28)] lg:hidden"
-                >
-                  Explore Notes
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                {[
-                  { label: 'Notes', value: noteCountLabel, hint: 'Available right now', tone: 'from-cyan-400/20 to-blue-500/20' },
-                  { label: 'Branches', value: branchCountLabel, hint: 'Organized collections', tone: 'from-fuchsia-400/20 to-pink-500/20' },
-                  { label: 'Semesters', value: semesterCountLabel, hint: 'Quick filters', tone: 'from-emerald-400/20 to-cyan-500/20' },
-                  { label: 'Videos', value: videoCountLabel, hint: 'Tutorial support', tone: 'from-amber-400/20 to-orange-500/20' },
-                ].map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    className="rounded-2xl border border-white/10 bg-zinc-950/70 p-5 shadow-lg shadow-black/20"
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.07, type: 'spring', stiffness: 120, damping: 18 }}
-                    whileHover={{ y: -4, scale: 1.01 }}
-                  >
-                    <div className={`mb-3 h-1.5 w-14 rounded-full bg-linear-to-r ${stat.tone}`} />
-                    <div className="text-3xl font-semibold text-white">{stat.value}</div>
-                    <div className="mt-2 text-sm font-medium text-zinc-200">{stat.label}</div>
-                    <div className="mt-1 text-xs text-zinc-500">{stat.hint}</div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <div className="hidden lg:flex items-center justify-end">
-                <Button
-                  type="button"
-                  variant="default"
-                  onClick={scrollToNotes}
-                  className="h-11 rounded-full bg-linear-to-r from-cyan-500 via-blue-500 to-fuchsia-500 px-5 text-white shadow-[0_0_30px_rgba(34,211,238,0.24)] transition hover:brightness-110 hover:shadow-[0_0_42px_rgba(168,85,247,0.28)]"
-                >
-                  Explore Notes
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </div>
-
-              <motion.div
-                className="rounded-3xl border border-white/10 bg-zinc-950/80 p-6 shadow-2xl shadow-black/30"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ type: 'spring', stiffness: 90, damping: 18, delay: 0.1 }}
-              >
-                <div className="min-w-0">
-                  <p className="text-sm text-zinc-400">Designed for quick study sessions</p>
-                  <h2 className="mt-1 text-2xl font-semibold text-white">Find a note in seconds</h2>
-                </div>
-
-              <div className="mt-6 space-y-3">
-                {[
-                  'Search by title without leaving the page',
-                  'Filter instantly by branch and semester',
-                  'Open videos and downloads from each note card',
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/5 p-4 text-sm text-zinc-300">
-                    <div className="mt-0.5 h-2.5 w-2.5 rounded-full bg-cyan-400" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 rounded-2xl border border-white/10 bg-linear-to-br from-cyan-500/10 via-white/5 to-fuchsia-500/10 p-5">
-                <div className="text-sm font-medium text-cyan-100">Best for focused study</div>
-                <p className="mt-2 text-sm leading-6 text-zinc-300">
-                  Keep the page open while you compare branches, jump between sems, and access supporting videos when they are available.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2 text-xs text-zinc-200">
-                  <span className="rounded-full border border-white/10 bg-zinc-950/70 px-3 py-1">Fast search</span>
-                  <span className="rounded-full border border-white/10 bg-zinc-950/70 px-3 py-1">Clear filters</span>
-                  <span className="rounded-full border border-white/10 bg-zinc-950/70 px-3 py-1">Video support</span>
-                </div>
-              </div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
+        <Hero />
+        <ArticlesPreview />
 
         <motion.section
           className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6 backdrop-blur-xl"
