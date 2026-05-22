@@ -6,12 +6,18 @@ type Note = {
   slug: string;
 };
 
+type Article = {
+  id: string;
+  slug: string;
+};
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.privateacademy.in';
 
   // Static pages
   const staticPages = [
     '',
+    '/articles',
     '/about',
     '/projects',
     '/careers',
@@ -30,6 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Fetch all notes dynamically
   let notePages: MetadataRoute.Sitemap = [];
+  let articlePages: MetadataRoute.Sitemap = [];
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -48,9 +55,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
       }));
     }
+
+    const { data: articles, error: articleError } = await supabase
+      .from('articles')
+      .select('id, slug');
+
+    if (!articleError && articles) {
+      articlePages = articles.map((article: Article) => ({
+        url: `${baseUrl}/articles/${article.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.8,
+      }));
+    }
   } catch (error) {
     console.error('Error fetching notes for sitemap:', error);
   }
 
-  return [...staticPages, ...notePages];
+  return [...staticPages, ...notePages, ...articlePages];
 }
