@@ -24,16 +24,7 @@ import {
   TableHead,
   TableCell,
 } from '@/components/ui/table';
-
-type Note = {
-  id: string;
-  title: string;
-  branch: string;
-  semester: number;
-  download_url: string;
-  slug: string;
-  youtube_url?: string;
-};
+import type { DBStudyNote as Note } from '@/lib/types';
 
 export default function AdminPage() {
   const router = useRouter();

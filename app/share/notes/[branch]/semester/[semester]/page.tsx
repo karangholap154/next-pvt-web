@@ -11,15 +11,7 @@ import Button from '@/components/Button';
 import Badge from '@/components/Badge';
 import ShareButton from '@/components/ShareButton';
 
-type Note = {
-  id: string;
-  title: string;
-  branch: string;
-  semester: number;
-  download_url: string;
-  slug: string;
-  youtube_url?: string;
-};
+import type { DBStudyNote as Note } from '@/lib/types';
 
 export default function ShareNotesPage() {
   const params = useParams();
