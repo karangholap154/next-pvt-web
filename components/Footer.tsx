@@ -1,5 +1,6 @@
 "use client";
 
+import type { ComponentType } from 'react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BookOpen, Heart, Mail, MapPin } from 'lucide-react';
@@ -67,7 +68,7 @@ export default function Footer() {
 
   const currentYear = new Date().getFullYear();
 
-  const getSocialIcon = (Icon: any) => {
+  const getSocialIcon = (Icon: ComponentType<{ className?: string }>) => {
     return <Icon className="w-4 h-4" />;
   };
 
@@ -110,6 +111,7 @@ export default function Footer() {
             <nav className="space-y-2">
               {[
                 { href: '/', label: 'Home' },
+                { href: '/articles', label: 'Articles' },
                 { href: '/about', label: 'About' },
                 { href: '/projects', label: 'Projects' },
                 { href: '/careers', label: 'Careers' },
