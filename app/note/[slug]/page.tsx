@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, Calendar, Download, Play, Sparkles } from 'lucide-react';
+import { ArrowLeft, BookOpen, Calendar, Download, Layers3, Play, Sparkles } from 'lucide-react';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Badge from '@/components/Badge';
@@ -21,10 +21,17 @@ export default function NotePage() {
   const slug = params.slug as string;
 
   const [note, setNote] = useState<Note | null>(null);
+  const [relatedNotes, setRelatedNotes] = useState<Note[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    let isActive = true;
+
     const fetchNote = async () => {
+      setIsLoading(true);
+      setNote(null);
+      setRelatedNotes([]);
+
       try {
         const { data, error } = await supabase
           .from('study_notes')
@@ -33,15 +40,41 @@ export default function NotePage() {
           .single();
 
         if (error) throw error;
+
+        if (!isActive) return;
+
         setNote(data);
+
+        try {
+          const { data: relatedData, error: relatedError } = await supabase
+            .from('study_notes')
+            .select('*')
+            .eq('branch', data.branch)
+            .eq('semester', data.semester)
+            .neq('slug', slug)
+            .order('title', { ascending: true })
+            .limit(6);
+
+          if (relatedError) throw relatedError;
+
+          if (isActive) {
+            setRelatedNotes((relatedData || []) as Note[]);
+          }
+        } catch (relatedError) {
+          console.error('Error fetching related notes:', relatedError);
+        }
       } catch (error) {
         console.error('Error fetching note:', error);
       } finally {
-        setIsLoading(false);
+        if (isActive) setIsLoading(false);
       }
     };
 
     if (slug) fetchNote();
+
+    return () => {
+      isActive = false;
+    };
   }, [slug]);
 
   if (isLoading) {
@@ -118,16 +151,16 @@ export default function NotePage() {
         </motion.div>
 
         <motion.div
-          className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-8"
+          className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-8"
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 90, damping: 18 }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.14),transparent_28%),radial-gradient(circle_at_top_right,rgba(236,72,153,0.12),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.04),transparent_38%)]" />
 
-          <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.55fr)_minmax(280px,0.78fr)]">
+          <div className="relative grid gap-8 xl:grid-cols-[minmax(0,1.45fr)_minmax(280px,0.8fr)]">
             <div className="space-y-8">
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge
                     variant="secondary"
@@ -161,23 +194,23 @@ export default function NotePage() {
                     {buildNoteDescription(note)}
                   </p>
                 </div>
-              </div>
 
-              <div className="grid gap-3 sm:grid-cols-3">
-                {[
-                  { label: 'Branch', value: note.branch, tone: 'from-cyan-500/20 to-blue-500/20' },
-                  { label: 'Semester', value: `Sem ${note.semester}`, tone: 'from-fuchsia-500/20 to-pink-500/20' },
-                  { label: 'Format', value: note.youtube_url ? 'Video + PDF' : 'PDF download', tone: 'from-emerald-500/20 to-cyan-500/20' },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-2xl border border-white/10 bg-zinc-950/60 p-4 shadow-lg shadow-black/10"
-                  >
-                    <div className={`mb-3 h-1.5 w-12 rounded-full bg-linear-to-r ${item.tone}`} />
-                    <div className="text-xs uppercase tracking-[0.2em] text-zinc-500">{item.label}</div>
-                    <div className="mt-2 text-sm font-medium text-white">{item.value}</div>
-                  </div>
-                ))}
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {[
+                    { label: 'Branch', value: note.branch, tone: 'from-cyan-500/20 to-blue-500/20' },
+                    { label: 'Semester', value: `Sem ${note.semester}`, tone: 'from-fuchsia-500/20 to-pink-500/20' },
+                    { label: 'Format', value: note.youtube_url ? 'Video + PDF' : 'PDF download', tone: 'from-emerald-500/20 to-cyan-500/20' },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-2xl border border-white/10 bg-zinc-950/60 p-4 shadow-lg shadow-black/10"
+                    >
+                      <div className={`mb-3 h-1.5 w-12 rounded-full bg-linear-to-r ${item.tone}`} />
+                      <div className="text-xs uppercase tracking-[0.2em] text-zinc-500">{item.label}</div>
+                      <div className="mt-2 text-sm font-medium text-white">{item.value}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <Card className="border-white/10 bg-zinc-950/70 p-5 shadow-xl shadow-black/20 sm:p-6">
@@ -186,8 +219,8 @@ export default function NotePage() {
                     <BookOpen className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-white">Overview</p>
-                    <p className="text-sm text-zinc-400">Quick access to the note content and study aids.</p>
+                    <p className="text-sm font-medium text-white">What you get</p>
+                    <p className="text-sm text-zinc-400">A quick summary before you jump into the file.</p>
                   </div>
                 </div>
 
@@ -195,10 +228,10 @@ export default function NotePage() {
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                     <div className="flex items-center gap-2 text-sm font-medium text-white">
                       <Calendar className="h-4 w-4 text-cyan-300" />
-                      Study material
+                      Same-semester focus
                     </div>
                     <p className="mt-2 text-sm leading-6 text-zinc-400">
-                      Open the note, skim the structure, and jump straight into revision.
+                      Built for fast revision when you only need the topic set for this branch and semester.
                     </p>
                   </div>
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -207,7 +240,7 @@ export default function NotePage() {
                       Direct download
                     </div>
                     <p className="mt-2 text-sm leading-6 text-zinc-400">
-                      One click opens the file in a new tab for a clean, fast handoff.
+                      Open the file in a new tab for a fast handoff to the hosted note.
                     </p>
                   </div>
                 </div>
@@ -217,8 +250,8 @@ export default function NotePage() {
                 <Card className="border-white/10 bg-zinc-950/70 p-5 shadow-xl shadow-black/20 sm:p-6">
                   <div className="mb-4 flex items-center justify-between gap-3">
                     <div>
-                      <h2 className="text-lg font-semibold text-white">Related video</h2>
-                      <p className="mt-1 text-sm text-zinc-400">Optional lecture or walkthrough for this topic.</p>
+                      <h2 className="text-lg font-semibold text-white">Companion video</h2>
+                      <p className="mt-1 text-sm text-zinc-400">Optional lecture or walkthrough for this note.</p>
                     </div>
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-cyan-300 ring-1 ring-white/10">
                       <Play className="h-4 w-4" />
@@ -237,9 +270,9 @@ export default function NotePage() {
                 </Card>
               ) : (
                 <Card className="border-white/10 bg-zinc-950/70 p-5 shadow-xl shadow-black/20 sm:p-6">
-                  <h2 className="text-lg font-semibold text-white">Related video</h2>
+                  <h2 className="text-lg font-semibold text-white">Companion video</h2>
                   <p className="mt-2 text-sm leading-6 text-zinc-400">
-                    No video is attached to this note. The download below is still available.
+                    No video is attached to this note. The download action in the sidebar is still available.
                   </p>
                 </Card>
               )}
@@ -303,6 +336,92 @@ export default function NotePage() {
             </aside>
           </div>
         </motion.div>
+
+        <motion.section
+          className="mt-8 rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-6"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.08, type: 'spring', stiffness: 90, damping: 18 }}
+        >
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-zinc-950/70 px-3 py-1 text-xs font-medium text-zinc-300">
+                <Layers3 className="h-3.5 w-3.5 text-cyan-300" />
+                Same branch and semester
+              </div>
+              <h2 className="mt-3 text-2xl font-semibold text-white">
+                More {note.branch} Semester {note.semester} notes
+              </h2>
+              <p className="mt-1 max-w-2xl text-sm text-zinc-400">
+                These are the closest matches to this page, so you can keep revising without leaving the same topic set.
+              </p>
+            </div>
+
+            <div className="text-sm text-zinc-400">
+              <span className="font-medium text-zinc-200">{relatedNotes.length}</span> matching notes
+            </div>
+          </div>
+
+          <div className="mt-6">
+            {relatedNotes.length > 0 ? (
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {relatedNotes.map((relatedNote) => (
+                  <Card
+                    key={relatedNote.id}
+                    className="group border-white/10 bg-zinc-950/60 p-5 shadow-lg shadow-black/10 transition duration-200 hover:-translate-y-0.5 hover:border-cyan-400/20 hover:bg-white/10"
+                  >
+                    <div className="flex h-full flex-col justify-between gap-5">
+                      <div className="space-y-4">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Badge variant="secondary" className="border-cyan-400/20 bg-cyan-400/10 text-cyan-100">
+                            {relatedNote.branch}
+                          </Badge>
+                          <Badge variant="outline" className="border-white/10 bg-white/5 text-zinc-200">
+                            Sem {relatedNote.semester}
+                          </Badge>
+                          <Badge variant="outline" className="border-fuchsia-400/20 bg-fuchsia-400/10 text-fuchsia-100">
+                            {relatedNote.youtube_url ? 'Video' : 'PDF'}
+                          </Badge>
+                        </div>
+
+                        <div className="space-y-2">
+                          <h3 className="text-lg font-semibold text-white transition group-hover:text-cyan-100">
+                            {relatedNote.title}
+                          </h3>
+                          <p className="text-sm leading-6 text-zinc-400">
+                            Another note from the same branch and semester, ready to open with one click.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="text-xs uppercase tracking-[0.2em] text-zinc-500">Open note</div>
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="h-10 rounded-full border-white/10 bg-white/5 px-4 text-zinc-100 transition hover:bg-white/10"
+                        >
+                          <Link href={`/note/${relatedNote.slug}`}>
+                            View note
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card className="border-white/10 bg-zinc-950/60 p-6">
+                <p className="text-sm text-zinc-300">
+                  No other notes were found for this branch and semester yet.
+                </p>
+                <p className="mt-2 text-sm text-zinc-500">
+                  Try the main library to browse the rest of the collection.
+                </p>
+              </Card>
+            )}
+          </div>
+        </motion.section>
       </div>
     </main>
   );

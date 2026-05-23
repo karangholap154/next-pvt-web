@@ -17,6 +17,7 @@ import type { Article } from '@/lib/types';
 import Button from '@/components/Button';
 import Card from '@/components/Card';
 import Badge from '@/components/Badge';
+import ShareButton from '@/components/ShareButton';
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -147,6 +148,10 @@ function getArticleMetrics(article: Article) {
   ];
 }
 
+function getArticleShareUrl(slug: string) {
+  return `https://www.privateacademy.in/articles/${slug}`;
+}
+
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticle(slug);
@@ -266,23 +271,33 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </h1>
                 </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {(article.tags || []).length > 0 ? (
-                    article.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-200"
-                      >
-                        <Tag className="h-3 w-3 text-cyan-300" />
-                        {tag}
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex flex-wrap gap-2">
+                    {(article.tags || []).length > 0 ? (
+                      article.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-200"
+                        >
+                          <Tag className="h-3 w-3 text-cyan-300" />
+                          {tag}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-400">
+                        <Tag className="h-3 w-3 text-zinc-500" />
+                        Uncategorised
                       </span>
-                    ))
-                  ) : (
-                    <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-400">
-                      <Tag className="h-3 w-3 text-zinc-500" />
-                      Uncategorised
-                    </span>
-                  )}
+                    )}
+                  </div>
+
+                  <ShareButton
+                    url={getArticleShareUrl(article.slug)}
+                    title={article.title}
+                    text={buildSummary(article)}
+                    label="Share article"
+                    className="mt-0 h-11 w-full border-white/10 bg-zinc-950/60 px-5 text-zinc-100 hover:bg-white/10 sm:w-auto sm:min-w-42.5"
+                  />
                 </div>
               </div>
 

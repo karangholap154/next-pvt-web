@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 import Button from "./Button";
 import { Share2, Check } from "lucide-react";
 
@@ -8,9 +9,11 @@ type Props = {
   url?: string;
   title?: string;
   text?: string;
+  label?: string;
+  className?: string;
 };
 
-export default function ShareButton({ url, title, text }: Props) {
+export default function ShareButton({ url, title, text, label = 'Share', className }: Props) {
   const [status, setStatus] = useState<"idle" | "copied" | "error">("idle");
 
   const handleShare = async () => {
@@ -41,7 +44,10 @@ export default function ShareButton({ url, title, text }: Props) {
     <Button
       onClick={handleShare}
       variant="outline"
-      className="mt-2 h-12 w-full rounded-full border-white/10 bg-zinc-950/60 text-zinc-100 hover:bg-white/10"
+      className={cn(
+        'mt-2 h-12 w-full rounded-full border-white/10 bg-zinc-950/60 text-zinc-100 hover:bg-white/10',
+        className,
+      )}
     >
       {status === "copied" ? (
         <>
@@ -49,7 +55,7 @@ export default function ShareButton({ url, title, text }: Props) {
         </>
       ) : (
         <>
-          <Share2 className="mr-2 h-4 w-4" /> Share
+          <Share2 className="mr-2 h-4 w-4" /> {label}
         </>
       )}
     </Button>
